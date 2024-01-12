@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: app-container
+          image: 807550779778.dkr.ecr.us-east-1.amazonaws.com/fiap
+          ports:
+            - containerPort: 80
+          env:
+            - name: POSTGRE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: fiap-opaque
+                  key: POSTGRE_CONNECTION_STRING
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: ASPNETCORE_ENVIRONMENT
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  ASPNETCORE_ENVIRONMENT: "DEVELOPMENT"

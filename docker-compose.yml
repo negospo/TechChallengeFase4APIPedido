@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  app:
+    image: mvcosta/fiap-app
+    ports:
+      - "7230:7230"
+    environment:
+      POSTGRE_CONNECTION_STRING: "User ID=postgres;Password=postgresfiap;Host=db;Port=5432;Database=postgres;"
+      ASPNETCORE_ENVIRONMENT: "DEVELOPMENT"
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgresfiap

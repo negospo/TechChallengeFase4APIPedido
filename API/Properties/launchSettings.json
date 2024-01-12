@@ -1,0 +1,41 @@
+{
+  "profiles": {
+    "API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "POSTGRE_CONNECTION_STRING": "User ID=postgres;Password=admin;Host=192.168.1.4;Port=5432;Database=FiapFase4Pedido;",
+        "API_STATUS_PATH": "https://localhost:7231/pedidostatus/",
+        "API_PAGAMENTO_PATH": "https://localhost:7230/pagamento/"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7229;http://localhost:5286"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:42851",
+      "sslPort": 44338
+    }
+  }
+}

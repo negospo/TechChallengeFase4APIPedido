@@ -3,7 +3,7 @@ name: Deploy to Amazon EKS
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build-and-push:
@@ -21,7 +21,7 @@ jobs:
 
       - name: Create ECR repository if not exists
         env:
-          ECR_REPOSITORY: fiap
+          ECR_REPOSITORY: fiap-pedido
         run: |
           aws ecr describe-repositories --repository-names $ECR_REPOSITORY || aws ecr create-repository --repository-name $ECR_REPOSITORY
 
@@ -33,7 +33,7 @@ jobs:
         id: build-push
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: fiap
+          ECR_REPOSITORY: fiap-pedido
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .

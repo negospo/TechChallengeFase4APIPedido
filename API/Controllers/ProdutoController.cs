@@ -15,6 +15,23 @@ namespace API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("redis/test")]
+        [ProducesResponseType(typeof(bool), 200)]
+        public ActionResult<bool> Get()
+        {
+            try
+            {
+                SkySoftware.Library.Redis.Connection.KeyExists("teste");
+                return Ok(true);
+            }
+            catch (Application.CustomExceptions.NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+
         /// <summary>
         /// Exclui um produto pelo seu id
         /// </summary>

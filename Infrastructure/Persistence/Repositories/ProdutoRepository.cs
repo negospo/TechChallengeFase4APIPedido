@@ -35,7 +35,7 @@ namespace Infrastructure.Persistence.Repositories
             string query = "select * from produto where excluido = false";
             var result =  Database.Connection().Query<Produto>(query);
 
-            SkySoftware.Library.Redis.Connection.SetObject(cacheKey, result, TimeSpan.FromMinutes(1), throwOnError: true);
+            SkySoftware.Library.Redis.Connection.SetObject(cacheKey, result, TimeSpan.FromMinutes(1), throwOnError: false);
             return result;
         }
 

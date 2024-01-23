@@ -15,32 +15,61 @@ namespace Infrastructure.Persistence.Repositories
 
         public Produto Get(int id)
         {
+            string cacheKey = Redis.Keys.Product.Get(id);
+            if (SkySoftware.Library.Redis.Connection.KeyExists(cacheKey,throwOnError:false))
+                return SkySoftware.Library.Redis.Connection.GetObject<Produto>(cacheKey, throwOnError: false);
+
             string query = "select * from produto where excluido = false and id = @id";
-            return Database.Connection().QueryFirstOrDefault<Produto>(query, new { id = id });
+            var result =  Database.Connection().QueryFirstOrDefault<Produto>(query, new { id = id });
+
+            SkySoftware.Library.Redis.Connection.SetObject(cacheKey, result, TimeSpan.FromMinutes(1),throwOnError:false);
+            return result;
         }
 
         public IEnumerable<Produto> List()
         {
+            string cacheKey = Redis.Keys.Product.List;
+            if (SkySoftware.Library.Redis.Connection.KeyExists(cacheKey, throwOnError: false))
+                return SkySoftware.Library.Redis.Connection.GetObject<IEnumerable<Produto>>(cacheKey, throwOnError: false);
+
             string query = "select * from produto where excluido = false";
-            return Database.Connection().Query<Produto>(query);
+            var result =  Database.Connection().Query<Produto>(query);
+
+            SkySoftware.Library.Redis.Connection.SetObject(cacheKey, result, TimeSpan.FromMinutes(1), throwOnError: true);
+            return result;
         }
 
         public IEnumerable<Produto> ListByCategory(ProdutoCategoria categoria)
         {
+            string cacheKey = Redis.Keys.Product.ListByCategory(categoria);
+            if (SkySoftware.Library.Redis.Connection.KeyExists(cacheKey, throwOnError: false))
+                return SkySoftware.Library.Redis.Connection.GetObject<IEnumerable<Produto>>(cacheKey, throwOnError: false);
+
             string query = "select * from produto where excluido = false and produto_categoria_id = @produto_categoria_id";
-            return Database.Connection().Query<Produto>(query, new
+            var result = Database.Connection().Query<Produto>(query, new
             {
                 produto_categoria_id = categoria
             });
+
+            SkySoftware.Library.Redis.Connection.SetObject(cacheKey, result, TimeSpan.FromMinutes(1), throwOnError: false);
+            return result;
         }
 
         public IEnumerable<Produto> ListByIds(List<int> ids)
         {
+            string cacheKey = Redis.Keys.Product.ListByIds(ids);
+            if (SkySoftware.Library.Redis.Connection.KeyExists(cacheKey, throwOnError: false))
+                return SkySoftware.Library.Redis.Connection.GetObject<IEnumerable<Produto>>(cacheKey, throwOnError: false);
+
+
             string query = "select * from produto where excluido = false and id = ANY(@ids)";
-            return Database.Connection().Query<Produto>(query, new
+            var result = Database.Connection().Query<Produto>(query, new
             {
                 ids = ids
             });
+
+            SkySoftware.Library.Redis.Connection.SetObject(cacheKey, result, TimeSpan.FromMinutes(1), throwOnError: false);
+            return result;
         }
 
         public int Insert(Produto produto)

@@ -7,6 +7,5 @@
         public static string APIStatusPath { get; set; }
 
         public static string APIPagamentoPath { get; set; }
-
     }
 }

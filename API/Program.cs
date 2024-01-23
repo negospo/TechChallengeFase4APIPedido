@@ -58,6 +58,7 @@ namespace API
             Infrastructure.Persistence.Settings.APIPagamentoPath = Settings.APIPagamentoPath;
             Infrastructure.Persistence.Settings.APIStatusPath = Settings.APIStatusPath;
 
+            SkySoftware.Library.Redis.Connection.Config(Settings.RedisConnectionString);
 
             builder.Services.AddTransient<Application.Interfaces.UseCases.IClienteUseCase, Application.Implementations.ClienteUseCase>();
             builder.Services.AddTransient<Application.Interfaces.Repositories.IClienteRepository, Infrastructure.Persistence.Repositories.ClienteRepository>();

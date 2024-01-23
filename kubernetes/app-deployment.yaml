@@ -30,6 +30,21 @@ spec:
                 configMapKeyRef:
                   name: app-pedido-config
                   key: ASPNETCORE_ENVIRONMENT
+            - name: API_STATUS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: app-pedido-config
+                  key: API_STATUS_PATH
+            - name: API_PAGAMENTO_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: app-pedido-config
+                  key: API_PAGAMENTO_PATH
+            - name: REDIS_CONNECTION_STRING
+              valueFrom:
+                configMapKeyRef:
+                  name: app-pedido-config
+                  key: REDIS_CONNECTION_STRING
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -37,3 +52,6 @@ metadata:
   name: app-pedido-config
 data:
   ASPNETCORE_ENVIRONMENT: "DEVELOPMENT"
+  API_STATUS_PATH: "http://app-status-service"
+  API_PAGAMENTO_PATH: "http://app-pagamento-service"
+  REDIS_CONNECTION_STRING: "redis:6379,ConnectTimeout=10000"

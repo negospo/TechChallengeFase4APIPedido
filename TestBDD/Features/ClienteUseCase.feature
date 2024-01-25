@@ -57,15 +57,15 @@ Scenario: Atualizar os detalhes de um cliente
 
 Scenario: Tentar atualizar um cliente sem ID
 	Given Eu tenho informações de atualização de cliente sem ID
-	When Eu tento atualizar o cliente
-	Then Uma exceção de Conflito é lançada indicando que o ID está vazio
+	When Eu tento atualizar o cliente sem ID
+	Then Uma exceção de Conflito é lançada indicando que o ID do cliente está vazio
 
 Scenario: Tentar atualizar um cliente com CPF duplicado
-	Given Eu tenho informações de atualização de um cliente existente
-	When Eu tento atualizar um cliente com CPF duplicado
+	Given Eu tenho informações de atualização de um cliente existente com CPF duplicado
+	When Eu tento atualizar um cliente com email ou CPF duplicado
 	Then Uma exceção de Conflito é lançada indicando CPF duplicado
 
 Scenario: Tentar atualizar um cliente com email duplicado
-	Given Eu tenho informações de atualização de um cliente existente
-	When Eu tento atualizar um cliente com email duplicado
+	Given Eu tenho informações de atualização de um cliente existente com email duplicado
+	When Eu tento atualizar um cliente com email ou CPF duplicado
 	Then Uma exceção de Conflito é lançada indicando email duplicado

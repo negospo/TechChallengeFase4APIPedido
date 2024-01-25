@@ -544,10 +544,10 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("Eu tenho informações de atualização de cliente sem ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 60
- testRunner.When("Eu tento atualizar o cliente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Eu tento atualizar o cliente sem ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 61
- testRunner.Then("Uma exceção de Conflito é lançada indicando que o ID está vazio", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Uma exceção de Conflito é lançada indicando que o ID do cliente está vazio", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -581,10 +581,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 64
- testRunner.Given("Eu tenho informações de atualização de um cliente existente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Eu tenho informações de atualização de um cliente existente com CPF duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 65
- testRunner.When("Eu tento atualizar um cliente com CPF duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Eu tento atualizar um cliente com email ou CPF duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 66
  testRunner.Then("Uma exceção de Conflito é lançada indicando CPF duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -621,10 +621,10 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 69
- testRunner.Given("Eu tenho informações de atualização de um cliente existente", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Eu tenho informações de atualização de um cliente existente com email duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 70
- testRunner.When("Eu tento atualizar um cliente com email duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Eu tento atualizar um cliente com email ou CPF duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 71
  testRunner.Then("Uma exceção de Conflito é lançada indicando email duplicado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

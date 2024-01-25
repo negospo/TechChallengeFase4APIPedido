@@ -238,7 +238,7 @@ namespace TestBDD.StepDefinitions
         }
 
         [Given(@"Eu tenho informações de um cliente com email já existente")]
-        public void WhenEuTentoInserirUmClienteComEmailJaExistente()
+        public void GivenEuTentoInserirUmClienteComEmailJaExistente()
         {
             _novoCliente = new Application.DTOs.Imput.ClienteInsert
             {
@@ -256,6 +256,7 @@ namespace TestBDD.StepDefinitions
 
             _mockClienteRepository.Setup(r => r.GetByEmail(It.IsAny<string>()))
                 .Returns(_cliente);
+
         }
 
         [Then(@"Uma exceção de Conflito é lançada indicando email duplicado")]
@@ -268,43 +269,112 @@ namespace TestBDD.StepDefinitions
         [Given(@"Eu tenho informações de atualização de um cliente existente")]
         public void GivenEuTenhoInformacoesDeAtualizacaoDeUmClienteExistente()
         {
-            throw new PendingStepException();
+            _clienteId = 2;
+            _atualizacaoCliente = new Application.DTOs.Imput.ClienteUpdate
+            {
+                Id = _clienteId,
+                Nome = "Silva",
+                Cpf = "069.228.100-23",
+                Email = "silva@email.com"
+            };
+
+            _mockClienteRepository.Setup(r => r.Get(_clienteId))
+                .Returns(databaseMock.First(f => f.Id == _clienteId));
+
+            _mockClienteRepository.Setup(r => r.Update(
+                It.IsAny<Domain.Entities.Cliente>()))
+                .Returns(true);
         }
 
         [When(@"Eu solicito a atualização do cliente com as novas informações")]
         public void WhenEuSolicitoAAtualizacaoDoClienteComAsNovasInformacoes()
         {
-            throw new PendingStepException();
+            _getResult = _clienteUseCase.Update(_atualizacaoCliente);
         }
 
         [Then(@"Os detalhes do cliente são atualizados com sucesso")]
         public void ThenOsDetalhesDoClienteSaoAtualizadosComSucesso()
         {
-            throw new PendingStepException();
+            _getResult.Should().NotBeNull();
+            _getResult.Id.Should().Be(2);
+            _getResult.Should().BeOfType<Application.DTOs.Output.Cliente>();
         }
 
         [Given(@"Eu tenho informações de atualização de cliente sem ID")]
         public void GivenEuTenhoInformacoesDeAtualizacaoDeClienteSemID()
         {
-            throw new PendingStepException();
+            _atualizacaoCliente = new Application.DTOs.Imput.ClienteUpdate
+            {
+                Id = null,
+                Nome = "Silva",
+                Cpf = "069.228.100-23",
+                Email = "silva@email.com"
+            };
         }
 
-        [When(@"Eu tento atualizar o cliente")]
+        [When(@"Eu tento atualizar o cliente sem ID")]
         public void WhenEuTentoAtualizarOCliente()
         {
-            throw new PendingStepException();
+           _act = () => _clienteUseCase.Update(_atualizacaoCliente);
         }
 
-        [When(@"Eu tento atualizar um cliente com CPF duplicado")]
-        public void WhenEuTentoAtualizarUmClienteComCPFDuplicado()
+        [Then(@"Uma exceção de Conflito é lançada indicando que o ID do cliente está vazio")]
+        public void ThenUmaExcecaoDeConflitoELancadaIndicandoQueOIDDoClienteEstaVazio()
         {
-            throw new PendingStepException();
+            _act.Should().Throw<Application.CustomExceptions.ConflictException>()
+                .WithMessage("Id do cliente está vazio");
         }
 
-        [When(@"Eu tento atualizar um cliente com email duplicado")]
-        public void WhenEuTentoAtualizarUmClienteComEmailDuplicado()
+        [Given(@"Eu tenho informações de atualização de um cliente existente com CPF duplicado")]
+        public void GivenEuTenhoInformacoesDeAtualizacaoDeUmClienteExistenteComCPFDuplicado()
         {
-            throw new PendingStepException();
+            _atualizacaoCliente = new Application.DTOs.Imput.ClienteUpdate
+            {
+                Id = 1,
+                Nome = "MV2",
+                Cpf = "408.158.700-00",
+                Email = "mv2@mvmail.com"
+            };
+            _cliente = new Domain.Entities.Cliente()
+            {
+                Id = 2,
+                Nome = "MV",
+                Cpf = "408.158.700-00",
+                Email = "mv@mvmail.com"
+            };
+
+            _mockClienteRepository.Setup(r => r.GetByCpf(It.IsAny<string>()))
+                .Returns(_cliente);
         }
+
+        [Given(@"Eu tenho informações de atualização de um cliente existente com email duplicado")]
+        public void GivenEuTenhoInformacoesDeAtualizacaoDeUmClienteExistenteComEmailDuplicado()
+        {
+            _atualizacaoCliente = new Application.DTOs.Imput.ClienteUpdate
+            {
+                Id = 1,
+                Nome = "MV2",
+                Cpf = "069.228.100-23",
+                Email = "mv2@mvmail.com"
+            };
+            _cliente = new Domain.Entities.Cliente()
+            {
+                Id = 2,
+                Nome = "MV",
+                Cpf = "069.228.100-23",
+                Email = "mv@mvmail.com"
+            };
+
+            _mockClienteRepository.Setup(r => r.GetByEmail(It.IsAny<string>()))
+                .Returns(_cliente);
+        }
+
+        [When(@"Eu tento atualizar um cliente com email ou CPF duplicado")]
+        public void WhenEuTentoAtualizarUmClienteComEmailOuCPFDuplicado()
+        {
+            _act = () => _clienteUseCase.Update(_atualizacaoCliente);
+        }
+
+
     }
 }

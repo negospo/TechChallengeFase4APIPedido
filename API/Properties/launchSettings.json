@@ -8,8 +8,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "POSTGRE_CONNECTION_STRING": "User ID=postgres;Password=admin;Host=192.168.1.4;Port=5432;Database=FiapFase4Pedido;",
         "REDIS_CONNECTION_STRING": "localhost:6379,ConnectTimeout=10000",
-        "API_STATUS_PATH": "https://localhost:7231/pedidostatus/",
-        "API_PAGAMENTO_PATH": "https://localhost:7230/pagamento/"
+        "API_STATUS_PATH": "https://localhost:7240/pedidostatus/",
+        "API_PAGAMENTO_PATH": "https://localhost:7250/pagamento/"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7229;http://localhost:5286"

@@ -32,8 +32,8 @@ namespace Infrastructure.Status
         public IEnumerable<PedidoStatusResponse> ListByStatus(Application.Enums.PedidoStatus status)
         {
             var client = new RestClient(Settings.APIStatusPath);
-            var request = new RestRequest("Pedido/listByStatus", Method.Post);
-            request.AddJsonBody(new { status = status });
+            var request = new RestRequest($"Pedido/listByStatus?status={(int)status}", Method.Get);
+            //request.AddJsonBody(new { status = 1 });
             var response = client.Execute<List<Application.DTOs.External.StatusService.PedidoStatusResponse>>(request);
             if (!response.IsSuccessful)
                 throw new Exception(response.ErrorMessage);
@@ -56,8 +56,7 @@ namespace Infrastructure.Status
         public bool Update(int pedidoId, Application.Enums.PedidoStatus status)
         {
             var client = new RestClient(Settings.APIStatusPath);
-            var request = new RestRequest($"Pedido/{pedidoId}/update", Method.Post);
-            request.AddJsonBody(new { status = status });
+            var request = new RestRequest($"Pedido/{pedidoId}/status/update?status={(int)status}", Method.Put);
             var response = client.Execute<bool>(request);
             if (!response.IsSuccessful)
                 throw new Exception(response.ErrorMessage);

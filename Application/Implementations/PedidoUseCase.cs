@@ -78,6 +78,9 @@ namespace Application.Implementations
         {
             //Busca os dados no service de Status
             var ordersStatus = this._pedidoStatusUseCase.ListByStatus(status);
+            if(ordersStatus.Count() == 0)
+                return new List<DTOs.Output.Pedido>();  
+
             var orders = this._pedidoRepository.ListByIds(ordersStatus.Select(s => s.PedidoId)).ToList();
             orders.ForEach(order =>
             {

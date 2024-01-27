@@ -53,7 +53,7 @@ namespace Infrastructure.Persistence.Repositories
             inner join produto b on b.id = a.produto_id  
             where pedido_id = any(@ids)";
 
-            var orders = Database.Connection().Query<Application.DTOs.Output.Pedido>(queryOrder, new { ids = pedidoIds });
+            var orders = Database.Connection().Query<Application.DTOs.Output.Pedido>(queryOrder, new { ids = pedidoIds.ToList() });
             var orderItems = Database.Connection().Query<Application.DTOs.Output.PedidoItem>(queryOrderItem, new
             {
                 ids = orders.Select(s => s.Id).ToList()

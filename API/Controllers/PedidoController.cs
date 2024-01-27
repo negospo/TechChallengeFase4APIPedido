@@ -17,21 +17,20 @@ namespace API.Controllers
             this._pedidoUseCase = pedidoUseCase;
         }
 
-        ///// <summary>
-        ///// Retorna status 200 se o usuário estiver autenticado
-        ///// </summary>
-        ///// <response code="200" >Autenticado</response>
-        ///// <response code="401" >Não autorizado</response>
-        //[HttpGet]
-        //[Route("authenticated")]
-        //[Authorize]
-        //public ActionResult Authenticated()
-        //{
-        //    int? authenticatedUserId = this.User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier") == null ? null : (int?)Convert.ToInt32(this.User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"));
+        /// <summary>
+        /// Retorna status 200 se o usuário estiver autenticado
+        /// </summary>
+        /// <response code="200" >Autenticado</response>
+        /// <response code="401" >Não autorizado</response>
+        [HttpGet]
+        [Route("authenticated")]
+        [Authorize]
+        public ActionResult Authenticated()
+        {
+            int? authenticatedUserId = this.User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier") == null ? null : (int?)Convert.ToInt32(this.User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"));
 
-
-        //    return Ok($"Autenticado como: {this.User.Identity.Name}");
-        //}
+            return Ok($"Autenticado como: {this.User.Identity.Name}");
+        }
 
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace API.Controllers
         [Route("order")]
         [CustonValidateModel]
         [ProducesResponseType(typeof(Validation.CustonValidationResultModel), 400)]
-        //[Authorize]
+        [Authorize]
         public ActionResult<Application.DTOs.Output.PedidoIdentificador> CreateOrder(Application.DTOs.Imput.Pedido pedido)
         {
             try
